@@ -11,6 +11,7 @@
     "@babel/plugin-proposal-optional-chaining": "^7.18.9",
     "core-js": "^3.6.5",
     "element-ui": "2.13.2",
+    "js-cookie": "^3.0.1",
     "normalize.css": "7.0.0",
     "qiankun": "^2.4.2",
     "vue": "2.6.10",
