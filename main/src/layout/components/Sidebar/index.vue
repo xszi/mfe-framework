@@ -45,13 +45,13 @@ export default {
       return fullPath
     },
     showLogo() {
-      return this.$store.state.settings.sidebarLogo
+      return this.$store.state.settings?.sidebarLogo
     },
     variables() {
       return variables
     },
     isCollapse() {
-      return !this.sidebar.opened
+      return !this.sidebar?.opened
     }
   },
   methods: {

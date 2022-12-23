@@ -1,7 +1,8 @@
 <template>
   <el-container class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
-    <el-header class="clearfix" />
+    <sidebar class="sidebar-container" />
+    <!-- <el-header class="clearfix" /> -->
     <el-container class="layout-main">
       <el-aside id="asideLeft" width="210px">
         <el-menu
@@ -75,7 +76,29 @@ export default {
       activeTab: 'tabs/activeTab',
       tabsList: 'tabs/tabsList',
       appLoading: 'tabs/appLoading'
-    })
+    }),
+    sidebar() {
+      return this.$store.state.app?.sidebar
+    },
+    device() {
+      return this.$store.state.app?.device
+    },
+    fixedHeader() {
+      return this.$store.state.settings?.fixedHeader
+    },
+    classObj() {
+      return {
+        hideSidebar: !this.sidebar.opened,
+        openSidebar: this.sidebar.opened,
+        withoutAnimation: this.sidebar.withoutAnimation,
+        mobile: this.device === 'mobile'
+      }
+    }
+  },
+  methods: {
+    handleClickOutside() {
+      this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+    }
   }
 }
 </script>
@@ -87,6 +110,15 @@ export default {
   height: 100%;
   width: 100%;
 }
+.drawer-bg {
+    background: #000;
+    opacity: 0.3;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    position: absolute;
+    z-index: 999;
+  }
 .layout-main {
   height: calc(100% - 64px);
   width: 100%;

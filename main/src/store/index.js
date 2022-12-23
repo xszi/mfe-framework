@@ -1,8 +1,6 @@
-// import {
-//   createStore
-// } from 'vuex'
 import Vue from 'vue'
 import Vuex from 'vuex'
+import getters from './getters'
 Vue.use(Vuex)
 import tabs from './module/tabs.js'
 
@@ -10,7 +8,7 @@ const store = new Vuex.Store({
   state: {},
   actions: {},
   mutations: {},
-  getters: {},
+  getters,
   modules: {
     tabs
   }
