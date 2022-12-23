@@ -1,5 +1,6 @@
 <template>
-  <el-container class="layout-box">
+  <el-container class="app-wrapper">
+    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <el-header class="clearfix" />
     <el-container class="layout-main">
       <el-aside id="asideLeft" width="210px">
@@ -23,7 +24,6 @@
         </el-menu>
       </el-aside>
       <el-main id="mainBox">
-        <div>主应用的已缓存的页面有: =====> {{ keepAliveList['iframe'] || '[暂无]' }}</div>
         <tabs />
         <!-- 子应用页面 -->
         <div v-show="!$route.name" v-loading="appLoading" element-loading-text="加载页面中, 请稍后...">
@@ -49,15 +49,21 @@
 </template>
 
 <script>
-
-import tabs from './tabs.vue'
+import { Navbar, Sidebar, AppMain, TagsView } from './components'
+import ResizeMixin from './mixin/ResizeHandler'
+import tabs from './components/tabs.vue'
 import { menuDataList } from '@/menuData/index.js'
 import { mapGetters } from 'vuex'
 
 export default {
   components: {
+    Navbar,
+    Sidebar,
+    AppMain,
+    TagsView,
     tabs
   },
+  mixins: [ResizeMixin],
   data() {
     return {
       menuDataList
@@ -74,8 +80,10 @@ export default {
 }
 </script>
 
-<style lang="scss" sopced>
-.layout-box {
+<style lang="scss" scoped>
+@import "~@/styles/mixin.scss";
+@import "~@/styles/variables.scss";
+.app-wrapper {
   height: 100%;
   width: 100%;
 }

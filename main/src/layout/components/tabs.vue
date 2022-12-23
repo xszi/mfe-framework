@@ -27,13 +27,11 @@
 </template>
 
 <script>
-// import { Close } from '@element-plus/icons-vue'
 import { mapGetters } from 'vuex'
 import tabs from '@/qiankun/tabs.js'
 
 export default {
   components: {
-    // Close,
   },
   computed: {
     ...mapGetters({

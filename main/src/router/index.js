@@ -7,7 +7,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 // import store from '@/store/index.js'
 
-import Layout from '@/components/layout/index.vue'
+import Layout from '@/layout/index.vue'
 import Child from '@/views/child.vue'
 import Home from '../views/home.vue'
 import tabs from '../qiankun/tabs'
@@ -66,7 +66,9 @@ const routes = [{
 
 const createRouter = () => new Router({
   mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({
+    y: 0
+  }),
   routes
 })
 
