@@ -10,6 +10,7 @@ module.exports = {
     outputDir: '../dist',
     publicPath: isDevelopment ? '/' :'/qiankun-vue3-tabsPage-demo',
     productionSourceMap: isDevelopment,
+    lintOnSave: isDevelopment,
     devServer: {
         open: true,
         port: 7000,

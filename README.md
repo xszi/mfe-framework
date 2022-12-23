@@ -1,4 +1,4 @@
-## Vue3.0 + qiankun.js 实现多tab标签页路由切换
+## Vue3.0 + qiankun.js 实现多 tab 标签页路由切换
 
 演示地址 [https://kuaifengle.github.io/qiankun-vue3-tabsPage-demo](https://kuaifengle.github.io/qiankun-vue3-tabsPage-demo)
 
@@ -19,14 +19,8 @@
 "vuex": "^4.0.0-0"
 ```
 
-#### Gif演示
-
-<img src="https://github.com/kuaifengle/qiankun-vue3-tabsPage/blob/master/gif/1.gif?raw=true" width="100%"/>
-<img src="https://github.com/kuaifengle/qiankun-vue3-tabsPage/blob/master/gif/3.gif?raw=true" width="100%"/>
-<img src="https://github.com/kuaifengle/qiankun-vue3-tabsPage/blob/master/gif/4.gif?raw=true" width="100%"/>
-<img src="https://github.com/kuaifengle/qiankun-vue3-tabsPage/blob/master/gif/5.gif?raw=true" width="100%"/>
-
 #### 路由配置修改
+
 ```
 主应用使用的是: createWebHistory();
 微应用使用的是: createMemoryHistory(window.__POWERED_BY_QIANKUN__ ? '' : `/subPages/app1/`);
@@ -51,8 +45,10 @@ routes = [                              |
 ]
 ```
 
-###  路由使用方法
+### 路由使用方法
+
 #### 主应用中路由跳转
+
 ```
 主应用使用的是原生的vue-router的方法
 无论是在主应用中跳转主应用页面          主=>主应用页面
@@ -63,7 +59,9 @@ router.replace()
 router.go(-1)
 ...
 ```
+
 #### 微应用中路由跳转
+
 ```
 微应用跳转自身页面也和原生的vue-router的使用方法一致
 参考lib: app2/src/views/user/**
@@ -122,4 +120,6 @@ let closeOtherTab = () => {
 
 ```
 
-如果觉得有用的话,还请给个Star😁😁😁
+如果觉得有用的话,还请给个 Star😁😁😁
+
+项目在父文件下会导致 eslint 报错红色提示显示不出来
