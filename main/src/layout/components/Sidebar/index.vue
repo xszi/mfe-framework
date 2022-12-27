@@ -33,8 +33,6 @@ export default {
     routes() {
       const routes = this.$router.options.routes
       const resultRoutes = process.env.NODE_ENV === 'development' ? defaultRoutes : this.getCombineRoutess()
-      console.log(resultRoutes, 'xxx')
-      console.log(routes[0], 'yyy')
       console.log(routes[0].children.concat(resultRoutes), 'kkk')
       return routes[0].children.concat(resultRoutes)
       // return routes.concat(resultRoutes)

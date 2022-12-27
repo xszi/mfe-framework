@@ -1,5 +1,5 @@
 <template>
-  <el-container class="app-wrapper">
+  <el-container :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar class="sidebar-container" />
     <div class="main-container">
@@ -28,9 +28,8 @@
           </div>
         </el-main>
       </el-container>
-    </div></el-container>
-  </div>
-
+    </div>
+  </el-container>
 </template>
 
 <script>
@@ -94,12 +93,19 @@ export default {
 @import "~@/styles/mixin.scss";
 @import "~@/styles/variables.scss";
 .app-wrapper {
+  @include clearfix;
+  position: relative;
   height: 100%;
   width: 100%;
+  &.mobile.openSidebar{
+    position: fixed;
+    top: 0;
+  }
   .main-container {
     width: 100%;
   }
 }
+
 .drawer-bg {
   background: #000;
   opacity: 0.3;

@@ -1,7 +1,6 @@
 <template>
   <div class="navbar">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-    <!-- <breadcrumb class="breadcrumb-container" /> -->
     <div class="nav-right">
       <div v-if="showCurrentUser" class="right-menu">
         <p>{{ currentUser }}</p>

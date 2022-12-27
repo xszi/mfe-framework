@@ -13,6 +13,7 @@ const mutations = {
   TOGGLE_SIDEBAR: state => {
     state.sidebar.opened = !state.sidebar.opened
     state.sidebar.withoutAnimation = false
+    console.log(556677)
     if (state.sidebar.opened) {
       Cookies.set('sidebarStatus', 1)
     } else {
