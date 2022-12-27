@@ -96,6 +96,9 @@ export default {
 .app-wrapper {
   height: 100%;
   width: 100%;
+  .main-container {
+    width: 100%;
+  }
 }
 .drawer-bg {
   background: #000;
