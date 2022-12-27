@@ -6,11 +6,9 @@
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
       </div>
-      <!-- <tags-view v-if="needTagsView" /> -->
-      <!-- <app-main /> -->
+      <tags-view v-if="needTagsView" />
       <el-container class="layout-main">
         <el-main id="mainBox">
-          <tabs />
           <div v-show="!$route.name" v-loading="appLoading" element-loading-text="加载页面中, 请稍后...">
             <div
               v-for="item in tabsList"
@@ -61,7 +59,7 @@ export default {
       appLoading: 'tabs/appLoading'
     }),
     needTagsView() {
-      return false
+      return true
     },
     sidebar() {
       return this.$store.state.app?.sidebar

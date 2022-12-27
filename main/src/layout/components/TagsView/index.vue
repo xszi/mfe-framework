@@ -3,23 +3,25 @@
     <scroll-pane ref="scrollPane" class="tags-view-wrapper" @scroll="handleScroll">
       <!-- :to="getToPathObj(tag)" -->
       <span
-        v-for="tag in visitedViews"
+        v-for="tag in tabsList"
         ref="tag"
         :key="tag.fullPath"
         :class="isActive(tag)?'active':''"
         tag="span"
         class="tags-view-item"
         @click="changeActiveTab(tag)"
-        @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
+        @click.middle.native="!isAffix(tag)?removeTab(tag):''"
       >
-        {{ tag.meta ? tag.meta.title : '' }}
-        <span v-if="!isAffix(tag) && visitedViews.length>1" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
+        {{ tag ? tag.title : '' }}
+        <span v-if="!isAffix(tag) && tabsList.length>1" class="el-icon-close" @click.prevent.stop="removeTab(tag)" />
       </span>
     </scroll-pane>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import tabs from '@/qiankun/tabs.js'
 import EventBus from '@/utils/eventBus'
 import { routeCache } from '@/utils/routeCache'
 import ScrollPane from './ScrollPane'
@@ -38,36 +40,19 @@ export default {
     }
   },
   computed: {
-    routes() {
-      return this.$store.state.permission.routes
-    }
-  },
-  watch: {
-    $route() {
-      this.addTags()
-      this.moveToCurrentTag()
-    },
-    visible(value) {
-      if (value) {
-        document.body.addEventListener('click', this.closeMenu)
-      } else {
-        document.body.removeEventListener('click', this.closeMenu)
-      }
-    }
+    ...mapGetters({
+      tabsList: 'tabs/tabsList',
+      activeTab: 'tabs/activeTab'
+    })
   },
   mounted() {
-    this.initTags()
-    this.addTags()
+    // this.addTags()
     this.visitedViews = JSON.parse(sessionStorage.getItem('visitedViews')) ? JSON.parse(sessionStorage.getItem('visitedViews')) : [this.$route]
     EventBus.$on('setRouteCache', this.getRouteCache)
   },
   methods: {
-    changeActiveTab(e) {
-      console.log(e, 'eee')
-      // this.$router.link()
-      this.$store.commit('app/displayCurHiddenOtherApps', 'v3-sub-app')
-      // history.pushState({}, e.meta.title, `/layout/v3-sub-app/#/monitor/index`)
-      // this.$router.push({ path: `/layout/v3-sub-app/#/monitor/index` })
+    changeActiveTab(item) {
+      this.$router.push(item.fullPath)
     },
     getRouteCache() {
       this.visitedViews = JSON.parse(sessionStorage.getItem('visitedViews'))
@@ -99,36 +84,36 @@ export default {
     isAffix(tag) {
       return tag.meta && tag.meta.affix
     },
-    filterAffixTags(routes, basePath = '/') {
-      let tags = []
-      routes.forEach(route => {
-        if (route?.meta?.affix) {
-          const tagPath = path.resolve(basePath, route.path)
-          tags.push({
-            fullPath: tagPath,
-            path: tagPath,
-            name: route.name,
-            meta: { ...route.meta }
-          })
-        }
-        if (route.children) {
-          const tempTags = this.filterAffixTags(route.children, route.path)
-          if (tempTags.length >= 1) {
-            tags = [...tags, ...tempTags]
-          }
-        }
-      })
-      return tags
-    },
-    initTags() {
-      const affixTags = this.affixTags = this.filterAffixTags(this.routes)
-      for (const tag of affixTags) {
-        // Must have tag name
-        if (tag.name) {
-          routeCache.addVisitedView(tag)
-        }
-      }
-    },
+    // filterAffixTags(routes, basePath = '/') {
+    //   let tags = []
+    //   routes.forEach(route => {
+    //     if (route?.meta?.affix) {
+    //       const tagPath = path.resolve(basePath, route.path)
+    //       tags.push({
+    //         fullPath: tagPath,
+    //         path: tagPath,
+    //         name: route.name,
+    //         meta: { ...route.meta }
+    //       })
+    //     }
+    //     if (route.children) {
+    //       const tempTags = this.filterAffixTags(route.children, route.path)
+    //       if (tempTags.length >= 1) {
+    //         tags = [...tags, ...tempTags]
+    //       }
+    //     }
+    //   })
+    //   return tags
+    // },
+    // initTags() {
+    //   const affixTags = this.affixTags = this.filterAffixTags(this.routes)
+    //   for (const tag of affixTags) {
+    //     // Must have tag name
+    //     if (tag.name) {
+    //       routeCache.addVisitedView(tag)
+    //     }
+    //   }
+    // },
     addTags() {
       const { name } = this.$route
       if (name) {
@@ -169,6 +154,12 @@ export default {
         this.toLastView(visitedViews, view)
       }
     },
+    removeTab(item) {
+      if (this.tabsList.length === 1) {
+        return
+      }
+      tabs.closeTab(item)
+    },
     toLastView(visitedViews, view) {
       const latestView = visitedViews.slice(-1)[0]
       if (latestView) {
@@ -188,11 +179,8 @@ export default {
         }
       }
     },
-    closeMenu() {
-      this.visible = false
-    },
     handleScroll() {
-      this.closeMenu()
+      console.warn('scroll')
     }
   }
 }

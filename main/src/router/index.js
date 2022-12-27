@@ -28,28 +28,25 @@ const routes = [
           title: '主应用',
           icon: 'record'
         },
-        children: [
-          {
-            path: '/about',
-            name: 'About',
-            component: () => import(/* webpackChunkName: "about" */ '../views/about.vue'),
-            meta: {
-              title: '关于',
-              icon: 'record'
-            }
-          },
-          {
-            path: '/user',
-            name: 'User',
-            component: () => import(/* webpackChunkName: "user" */ '../views/user.vue'),
-            meta: {
-              title: '用户222',
-              icon: 'record'
-            }
-          }
-        ]
       },
-
+      {
+        path: '/about',
+        name: 'About',
+        component: () => import(/* webpackChunkName: "about" */ '../views/about.vue'),
+        meta: {
+          title: '关于',
+          icon: 'record'
+        }
+      },
+      {
+        path: '/user',
+        name: 'User',
+        component: () => import(/* webpackChunkName: "user" */ '../views/user.vue'),
+        meta: {
+          title: '用户222',
+          icon: 'record'
+        }
+      },
       {
         path: '/app1:pathMatch(.*)',
         component: Child
