@@ -67,33 +67,30 @@ router.onError((error) => {
 
 ## Vue2.0/Vue3.0 + qiankun 实现多 tab 标签页路由切换
 
-演示地址 [https://xszi.github.io/mfe-main-app](https://xszi.github.io/mfe-main-app)
+1. 原理是通过监听主应用的 vue-router 的 router.beforeEach 方法来动态加载(loadMicroApp)微应用页面
+2. 用 vuex 来管理已加载的微应用和 tab 标签数据
+3. 监听用 initialState 的变化来执行对微页面内部的路由跳转
+4. 用 keep-alive 来缓存主应用和微应用的页面
+5. 关闭微应用页面的 tab 时修改 keep-alive 的值并判断是否需要销毁微应用
+
+## 根据项目启动和依赖各版本
 
 ```
-原理是通过监听主应用的vue-router的 router.beforeEach 方法来动态加载(loadMicroApp)微应用页面
-用vuex来管理已加载的微应用和tab标签数据
-监听用initialState的变化来执行对微页面内部的路由跳转
-用keep-alive来缓存主应用和微应用的页面
-关闭微应用页面的tab时修改keep-alive的值并判断是否需要销毁微应用
+// 各依赖版本
+"element-ui": "^2.13.2",
+"qiankun": "^2.4.2",
+"vue": "^2.6.10",
+"vue-router": "^3.0.6",
+"vuex": "3.1.0"
 ```
 
-```
-各依赖版本
-"element-plus": "^1.3.0-beta.5",
-"qiankun": "^2.6.3",
-"vue": "^3.0.0",
-"vue-router": "^4.0.0-0",
-"vuex": "^4.0.0-0"
-```
+#### 注意：
 
-#### 路由配置修改
+1. 路由配置修改
 
 ```
-主应用使用的是: createWebHistory();
-微应用使用的是: createMemoryHistory(window.__POWERED_BY_QIANKUN__ ? '' : `/subPages/app1/`);
-
-每个vue文件都要定义 [name] 属性, 并且要与 router/index.js 内部定义页面参数的 [name] 相同 如:
-lib: src/views/user.vue
+//每个vue文件都要定义 [name] 属性, 并且要与 router/index.js 内部定义页面参数的 [name] 相同
+//eg: lib: src/views/user.vue
 export default {
     name: 'App1Detail',         >>>=====|
     setup() {},                         |
@@ -112,37 +109,12 @@ routes = [                              |
 ]
 ```
 
-### 路由使用方法
+2. 子应用间的跳转
 
-#### 主应用中路由跳转
-
-```
-主应用使用的是原生的vue-router的方法
-无论是在主应用中跳转主应用页面          主=>主应用页面
-还是在主应用中跳转微应用页面            主=>微应用页面
-
-router.push()
-router.replace()
-router.go(-1)
-...
-```
-
-#### 微应用中路由跳转
+从 **A** 微应用跳转 **B** 微应用的子页面, eg:
 
 ```
-微应用跳转自身页面也和原生的vue-router的使用方法一致
-参考lib: app2/src/views/user/**
-
-router.push()
-router.replace()
-router.go(-1)
-...
-
-============================ 分割线  =================================
-
-从A微应用跳转B微应用的子页面, 如:
-参考lib: app1/src/views/about.vue
-...
+    // 参考 lib: app1/src/views/about.vue
     import { getCurrentInstance } from 'vue'
 
     setup() {
@@ -156,26 +128,27 @@ router.go(-1)
             jump
         }
     }
-...
+```
 
-============================ 分割线  =================================
+3. 关闭 `tab` 标签
 
-在微应用中关闭当前活跃的tab标签,如:
-参考lib: app1/src/views/user.vue
+- 在微应用中关闭当前活跃的 `tab` 标签
 
+```
+    // 参考 lib: app1/src/views/user.vue
     let closeActiveTab = () => {
     action.setGlobalState({
         changeMicoTabsPath: {
             type: 'closeActiveTab',
         },
     })
+
 }
+```
 
-============================ 分割线  =================================
+- 在微应用中关闭当前已加载的其他 `tab` 标签
 
-在微应用中关闭当前已加载的其他tab标签,如:
-参考lib: app1/src/views/user.vue
-
+```
 let closeOtherTab = () => {
     action.setGlobalState({
         changeMicoTabsPath: {
@@ -186,5 +159,3 @@ let closeOtherTab = () => {
 }
 
 ```
-
-如果觉得有用的话,还请给个 Star😁😁😁
