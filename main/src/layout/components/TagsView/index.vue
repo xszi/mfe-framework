@@ -25,7 +25,7 @@ import tabs from '@/qiankun/tabs.js'
 import EventBus from '@/utils/eventBus'
 import { routeCache } from '@/utils/routeCache'
 import ScrollPane from './ScrollPane'
-import path from 'path'
+// import path from 'path'
 
 export default {
   components: { ScrollPane },

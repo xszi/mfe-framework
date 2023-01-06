@@ -8,15 +8,11 @@
 </template>
 
 <script>
-import tabs from './tabs.vue'
-import TagsView from './TagsView'
 import { menuDataList } from '@/menuData/index.js'
 import { mapGetters } from 'vuex'
 export default {
   name: 'AppMain',
   components: {
-    tabs,
-    TagsView
   },
   data() {
     return {

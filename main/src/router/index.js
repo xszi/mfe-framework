@@ -27,7 +27,7 @@ const routes = [
         meta: {
           title: '主应用',
           icon: 'record'
-        },
+        }
       },
       {
         path: '/about',
