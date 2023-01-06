@@ -97,7 +97,7 @@ export default {
           if (item.path !== data.path) {
             return item
           } else {
-            // findIndex = index > 1 ? index : 1
+            // findIndex = index > 1 ? index : 1111
           }
         })
         activeTab = nowActiveTab
