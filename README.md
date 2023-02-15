@@ -22,6 +22,7 @@
 9. 项目间组件复用（待实现）
 10. 嵌套子子应用（待实现）
 11. 嵌入 blink-mind react 子应用（待实现）
+12. 改造一个基于Vue-Vben-Admin（Vue3+Vite+TS+Vue-Design-Vue）的微前端框架
 
 #### UMD 格式打包
 
