@@ -77,7 +77,7 @@ router.onError((error) => {
 ## 根据`package.json`项目启动和依赖库版本
 
 ```
-// 各依赖版本
+// 各依赖版本 node使用14.16.0
 "element-ui": "^2.13.2",
 "qiankun": "^2.4.2",
 "vue": "^2.6.10",

@@ -22,7 +22,7 @@ module.exports = {
 
   },
   configureWebpack: {
-    name: '税企直连平台(测试网页)',
+    name: 'main',
 
     resolve: {
       extensions: ['.js', '.vue', '.json'],
